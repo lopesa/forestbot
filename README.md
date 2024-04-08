@@ -1,3 +1,7 @@
+# Setup notes
+
+python version has to be 3.11.0. 3.12.0 (specfically, not sure about > 3.12.0) gives a setup error
+
 <p align="center">
   <a href="https://nextjs-flask-starter.vercel.app/">
     <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" height="96">
