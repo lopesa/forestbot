@@ -1,6 +1,9 @@
 # Setup notes
 
-python version has to be 3.11.0. 3.12.0 (specfically, not sure about > 3.12.0) gives a setup error
+python version has to be 3.11.0. 3.12.0 (only specfically tried 3.12, not sure about > 3.12.0) gives a setup error
+
+node version has to be 18.x, not 20.x. 20.x is incompatible with the needed Python version within Vercel.
+See here: https://stackoverflow.com/questions/78233938/vercel-error-unable-to-find-any-supported-python-versions
 
 <p align="center">
   <a href="https://nextjs-flask-starter.vercel.app/">
