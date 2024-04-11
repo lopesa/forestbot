@@ -2,7 +2,6 @@ from flask import Flask, request
 # from dotenv import load_dotenv
 # import os
 from langchain_openai import ChatOpenAI
-from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 # env = os.environ
