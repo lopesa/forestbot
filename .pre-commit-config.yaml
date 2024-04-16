@@ -1,4 +1,7 @@
-# run `pre-commit autoupdate` to update to the latest version of hooks
+# NOTES
+# Run `pre-commit autoupdate` to update to the latest version of hooks
+# Ry default pre-commit only runs against changed files. To run against all riles run 'pre-commit run --all-files'
+
 repos:
   - repo: https://github.com/python-poetry/poetry
     rev: "1.8.0"

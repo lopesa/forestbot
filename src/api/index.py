@@ -1,4 +1,5 @@
 from flask import Flask, request
+
 # from dotenv import load_dotenv
 # import os
 from langchain_openai import ChatOpenAI
@@ -22,18 +23,18 @@ prompt = ChatPromptTemplate.from_messages(
 chain = prompt | chat
 
 
-
 app = Flask(__name__)
 
-@app.route("/api/chat", methods=['POST'])
+
+@app.route("/api/chat", methods=["POST"])
 def main():
     test = chain.invoke(
-      {
-          "messages": request.json['messages'],
-      }
+        {
+            "messages": request.json["messages"],
+        }
     )
     try:
         res = test.content
-    except:
-        res = 'Error'
+    except Exception:
+        res = "Error"
     return res
