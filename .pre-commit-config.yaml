@@ -1,6 +1,6 @@
 # NOTES
 # Run `pre-commit autoupdate` to update to the latest version of hooks
-# Ry default pre-commit only runs against changed files. To run against all riles run 'pre-commit run --all-files'
+# By default pre-commit only runs against changed files. To run against all riles run 'pre-commit run --all-files'
 
 repos:
   - repo: https://github.com/python-poetry/poetry
@@ -9,6 +9,7 @@ repos:
       - id: poetry-check
       - id: poetry-lock
       - id: poetry-install
+      - id: poetry-export # exports an updated requirements.txt, which we need in order to deploy to Vercel
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
     rev: v0.3.7
