@@ -1,5 +1,5 @@
 # Templates
- 
+
 The starting template is a combination of the following 2 vercel templates:
 
 1. https://vercel.com/templates/next.js/nextjs-flask-starter:
