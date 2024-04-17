@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import Chat from "./components/Chat";
-import { useChat } from "ai/react";
-import { FormEvent } from "react";
+import Chat from './components/Chat';
+import { useChat } from 'ai/react';
+import { FormEvent } from 'react';
 
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     onFinish: async () => {
       // setGotMessages(true);
-    },
+    }
   });
 
   const handleMessageSubmit = async (e: FormEvent<HTMLFormElement>) => {

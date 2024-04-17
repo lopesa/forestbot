@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "flask-dev": "FLASK_DEBUG=1 pip3 install -r requirements.txt && python3 -m flask --app src/api/index run -p 5328",
+    "flask-dev": "FLASK_DEBUG=1 poetry install && FLASK_DEBUG=1 poetry run python -m flask --app src.api.index run -p 5328",
     "next-dev": "next dev",
     "dev": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky"
   },
   "dependencies": {
     "@types/node": "20.1.4",
@@ -17,7 +18,6 @@
     "ai": "^3.0.19",
     "autoprefixer": "10.4.14",
     "concurrently": "^8.0.1",
-    "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
     "next": "13.4.3",
     "postcss": "8.4.23",
@@ -28,5 +28,19 @@
   },
   "engines": {
     "node": "18.x"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.34.1",
+    "globals": "^15.0.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "typescript-eslint": "^7.7.0"
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
   }
 }
