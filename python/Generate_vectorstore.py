@@ -37,14 +37,19 @@ print("Clé API chargée avec succès.")
 ### Load document     ###
 #########################
 
-loaders = [PyPDFLoader("../pdf/EdAP 2020_EN.pdf"), PyPDFLoader("../pdf/SOF book-web-rev3d-hires.pdf")]
+loaders = [
+    PyPDFLoader("../pdf/EdAP 2020_EN.pdf"),
+    PyPDFLoader("../pdf/SOF book-web-rev3d-hires.pdf"),
+]
 docs = []
 for loader in loaders:
     docs.extend(loader.load())
 
 len(docs)
 
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=50, separators=["\n\n", "\n", "(?<=\. )", " ", ""])
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1500, chunk_overlap=50, separators=["\n\n", "\n", "(?<=\. )", " ", ""]
+)
 splits = text_splitter.split_documents(docs)
 print(len(splits))
 print(len(docs))
@@ -63,4 +68,6 @@ if os.path.exists(persist_directory):
 else:
     # If the vector store does not exist, generate it
     # Assuming 'splits' is a list of documents already defined elsewhere in your notebook
-    vectordb = Chroma.from_documents(documents=splits, embedding=embedding, persist_directory=persist_directory)
+    vectordb = Chroma.from_documents(
+        documents=splits, embedding=embedding, persist_directory=persist_directory
+    )

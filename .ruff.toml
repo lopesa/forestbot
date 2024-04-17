@@ -1,6 +1,4 @@
 # File to override default ruff linting and formatting rules
 
-line-length = 140
-
 # Include Jupyter Notebooks
 extend-include = ["*.ipynb"]

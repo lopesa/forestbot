@@ -15,7 +15,9 @@ export default function Messages({ messages }: { messages: Message[] }) {
           <div className="rounded-tl-lg bg-gray-800 p-2 border-r border-gray-600 flex items-center">
             {msg.role === 'assistant' ? '🤖' : '🧑‍💻'}
           </div>
-          <div className="ml-2 flex items-center text-gray-200">{msg.content}</div>
+          <div className="ml-2 flex items-center text-gray-200">
+            {msg.content}
+          </div>
         </div>
       ))}
       <div ref={messagesEndRef} />
