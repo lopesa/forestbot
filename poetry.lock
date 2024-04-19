@@ -549,6 +549,27 @@ docs = ["Sphinx", "furo"]
 test = ["objgraph", "psutil"]
 
 [[package]]
+name = "gunicorn"
+version = "22.0.0"
+description = "WSGI HTTP Server for UNIX"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "gunicorn-22.0.0-py3-none-any.whl", hash = "sha256:350679f91b24062c86e386e198a15438d53a7a8207235a78ba1b53df4c4378d9"},
+    {file = "gunicorn-22.0.0.tar.gz", hash = "sha256:4a0b436239ff76fb33f11c07a16482c521a7e09c1ce3cc293c2330afe01bec63"},
+]
+
+[package.dependencies]
+packaging = "*"
+
+[package.extras]
+eventlet = ["eventlet (>=0.24.1,!=0.36.0)"]
+gevent = ["gevent (>=1.4.0)"]
+setproctitle = ["setproctitle"]
+testing = ["coverage", "eventlet", "gevent", "pytest", "pytest-cov"]
+tornado = ["tornado (>=0.2)"]
+
+[[package]]
 name = "h11"
 version = "0.14.0"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
@@ -750,13 +771,13 @@ extended-testing = ["aiosqlite (>=0.19.0,<0.20.0)", "aleph-alpha-client (>=2.15.
 
 [[package]]
 name = "langchain-core"
-version = "0.1.43"
+version = "0.1.44"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0,>=3.8.1"
 files = [
-    {file = "langchain_core-0.1.43-py3-none-any.whl", hash = "sha256:9b601916602c17cb7588e8089302e30872cbd049b583a27debf5566018af6405"},
-    {file = "langchain_core-0.1.43.tar.gz", hash = "sha256:499133fadc28efcf7d24306236521518080bb10fd8bf6f7426de4a2bbf2aebb5"},
+    {file = "langchain_core-0.1.44-py3-none-any.whl", hash = "sha256:d8772dccef95fc97bfa2dcd19412e620ebe14def1f0e218374971f6e30a46a49"},
+    {file = "langchain_core-0.1.44.tar.gz", hash = "sha256:e313975d9ae2926342e6f2ad760338d31f18b1223e9b8b4dc408daeeade46a83"},
 ]
 
 [package.dependencies]
@@ -1078,13 +1099,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.20.0"
+version = "1.21.2"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.7.1"
 files = [
-    {file = "openai-1.20.0-py3-none-any.whl", hash = "sha256:9fcc75256b2425393800e358cd520b02b5ab1a8731921e45aa7ae6aec3ee8187"},
-    {file = "openai-1.20.0.tar.gz", hash = "sha256:d7c0e824b7da3c043731943965c737595cf9631c913b7a1464c502fdf492b9a9"},
+    {file = "openai-1.21.2-py3-none-any.whl", hash = "sha256:65f6bed84ecde0fc20e4f3b458000deb775531aa29154ff4d679e937d7e4370d"},
+    {file = "openai-1.21.2.tar.gz", hash = "sha256:7b6e4d59f3686fcd94efdb2ee61052bf6c9dbb58052b5116fc0d75ba7adbf329"},
 ]
 
 [package.dependencies]
@@ -1922,4 +1943,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "b17647da47c46b54e0e6ae7e3aa44510ece53c3f4221793ae5536bd0baa81dfc"
+content-hash = "458296ca185b0d79ebc338821e63c6d9fcd699b0b698874b0dfe9ec8a696657f"
