@@ -43,3 +43,6 @@ __pycache__
 
 # poetry
 poetry.lock
+
+/ui/node_modules
+/ui/.next
