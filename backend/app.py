@@ -1,7 +1,5 @@
 from flask import Flask, request
-from flask import Flask
 
-from dotenv import load_dotenv
 # import os
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder

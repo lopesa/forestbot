@@ -73,4 +73,3 @@ else:
     vectordb = Chroma.from_documents(
         documents=splits, embedding=embedding, persist_directory=persist_directory
     )
-
