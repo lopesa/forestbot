@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Guillaume Soto", "Tony Lopes" ,"Connor Haines"]
 readme = "README.md"
-packages = [{include = "src/api/*.py"}]
+packages = [{include = "backend/*.py"}]
 
 [tool.poetry.dependencies]
 python = "^3.10,<3.11"

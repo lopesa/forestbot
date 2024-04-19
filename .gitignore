@@ -46,3 +46,7 @@ poetry.lock
 
 # VS Code
 .vscode/
+
+# UI
+/ui/node_modules
+/ui/.next
