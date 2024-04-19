@@ -1,0 +1,4 @@
+# File to override default ruff linting and formatting rules
+
+# Include Jupyter Notebooks
+extend-include = ["*.ipynb"]
