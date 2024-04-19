@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "flask-dev": "FLASK_DEBUG=1 poetry install && FLASK_DEBUG=1 poetry run python -m flask --app src.api.index run -p 5328",
-    "flask-dev-monorepo": "FLASK_DEBUG=1 poetry install && FLASK_DEBUG=1 poetry run python -m flask --app backend.index run -p 5328",
+    "flask-dev-monorepo": "FLASK_DEBUG=1 poetry install && FLASK_DEBUG=1 poetry run python -m flask --app backend.app run -p 5328",
     "next-dev": "next dev",
     "dev": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev\"",
     "build": "next build",
