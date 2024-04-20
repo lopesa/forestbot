@@ -44,5 +44,5 @@ __pycache__
 # poetry
 poetry.lock
 
-/ui/node_modules
-/ui/.next
+/ui_next/node_modules
+/ui_next/.next
