@@ -27,6 +27,7 @@ ragas = "^0.1.7"
 matplotlib = "^3.8.4"
 pandas-profiling = "^3.6.6"
 
+# this is a workaround for the pysqlite3-binary package not being available for Chroma version in Streamlit deployment
 # pysqlite3-binary = { version = "*", markers="sys_platform == 'darwin' and platform_machine == 'arm64'" }
 pysqlite3-binary = { version = "*", markers = "platform_machine == 'x86_64'" }
 

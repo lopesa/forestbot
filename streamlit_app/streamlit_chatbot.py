@@ -7,6 +7,8 @@ import Call_RAG
 # needed for Streamlit deployment
 # in order to have the correct sqlite3 version
 # for Chroma
+# comment out for mac silicon local deployment
+# @todo: use a chip-type switch
 __import__("pysqlite3")
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 #####################
