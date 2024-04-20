@@ -1,9 +1,19 @@
+import sys
 import streamlit as st
 from streamlit_chat import message
 import Call_RAG
 
+
+# needed for Streamlit deployment
+# in order to have the correct sqlite3 version
+# for Chroma
+__import__("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+#####################
+
+
 st.set_page_config(page_title="ForestBot Demo", page_icon=":robot:")
-st.title("Forestbot")
+st.title("Forestbot 1")
 
 # Initialize session variables if they are not already defined
 if "generated" not in st.session_state:
