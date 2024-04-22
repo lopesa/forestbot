@@ -4,28 +4,30 @@ version = "0.1.0"
 description = ""
 authors = ["Guillaume Soto", "Tony Lopes", "Connor Haines"]
 readme = "README.md"
-packages = [{ include = "backend/*.py" }]
+packages = [{ include = "backend_flask/*.py" }, { include = "streamlit_app" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-numpy = "^1.26.4"
+numpy = "^1.26.2"
 Flask = "^3.0.3"
 openai = "^1.17.1"
 langchain = { extras = ["docarray"], version = "^0.1.16" }
 gunicorn = "^22.0.0"
 langchain-openai = "^0.1.3"
-python-dotenv = "^1.0.1"
+python-dotenv = "^1.0.0"
 panel = "^1.4.1"
 param = "^2.1.0"
 ipykernel = "^6.29.4"
 pypdf = "^4.2.0"
-streamlit = "^1.33.0"
+streamlit = "^1.29.0"
+# For langchain-chroma, a possible solution would be to set the `python` property to ">=3.11,<3.13"
 langchain-community = "^0.0.33"
-chromadb = "^0.4.24"
 streamlit-chat = "^0.1.1"
 icecream = "^2.1.3"
 # this is a workaround for the pysqlite3-binary package not being available for Chroma version in Streamlit deployment
 pysqlite3-binary = { version = "*", markers = "platform_machine == 'x86_64'" }
+chromadb = "^0.4.18"
+streamlit-chromadb-connection = "^1.0.3"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.4"

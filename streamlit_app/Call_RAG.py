@@ -10,9 +10,27 @@ from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_community.vectorstores import Chroma
 
+# from langchain_chroma import Chroma
+import chromadb
+from pathlib import Path
+
+
+cwd = Path.cwd()
+
+persistent_client_path = (Path(__file__).parent / "vectorstore/chroma/").resolve()
 
 # Setup logging
 logging.basicConfig(level=logging.ERROR)
+
+# configuration = {
+#     "client": "PersistentClient",
+#     # "path": "/tmp/.chroma"
+#     "path": "/Users/tonylopes/projects/RAG for PAPFOR/forestbot/streamlit_app/vectorstore/chroma/"
+# }
+
+# collection_name = "chroma"
+
+# conn = st.connection("chromadb", type=ChromadbConnection, **configuration)
 
 
 def load_environment_variables():
@@ -33,6 +51,7 @@ def check_vector_store(path):
         raise FileNotFoundError(
             "Vector store not found. Please ensure the directory exists or provide a valid path."
         )
+    # return conn
     return Chroma(
         persist_directory=path, embedding_function=initialize_embedding(openai.api_key)
     )
@@ -60,17 +79,28 @@ def run_qa_chain(llm, vectordb, question):
 
 def ask(question):
     api_key = load_environment_variables()
-    embedding = initialize_embedding(api_key)
+    # embedding = initialize_embedding(api_key)
 
     try:
-        vectordb = check_vector_store("vectorstore/chroma/")
+        persistent_client = chromadb.PersistentClient(path=str(persistent_client_path))
+
+        langchain_chroma = Chroma(
+            client=persistent_client,
+            collection_name="collection_name",
+            embedding_function=initialize_embedding(openai.api_key),
+        )
+
+        # conn = st.connection("chromadb", type=ChromadbConnection, **configuration)
+
+        # vectordb = check_vector_store("vectorstore/chroma/")
     except FileNotFoundError as e:
         logging.error(e)
         sys.exit(1)
 
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 
-    return run_qa_chain(llm, vectordb, question)
+    # return run_qa_chain(llm, vectordb, question)
+    return run_qa_chain(llm, langchain_chroma, question)
 
 
 if __name__ == "__main__":
