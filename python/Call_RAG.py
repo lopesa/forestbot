@@ -52,9 +52,9 @@ def run_qa_chain(llm, vectordb,question):
 def ask(question):
     api_key = load_environment_variables()
     embedding = initialize_embedding(api_key)
-    
+    base_path = os.path.dirname(os.path.abspath(__file__))  # Obtient le chemin absolu du script actuel
     try:
-        vectordb = check_vector_store('vectorstore/chroma/')
+        vectordb = check_vector_store(os.path.join(base_path, '../vectorstore/chroma/'))
     except FileNotFoundError as e:
         logging.error(e)
         sys.exit(1)
@@ -66,4 +66,4 @@ def ask(question):
 if __name__ == "__main__":
     #main()
     question = "What is the difference between OFAC and COMIFAC?"
-    ask(question)
+    print(ask(question))
