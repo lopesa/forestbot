@@ -14,6 +14,16 @@ from langchain_community.vectorstores import Chroma
 import chromadb
 from pathlib import Path
 
+# THIS HACK IS NOW IN TWO PLACES, TODO: REFACTOR
+# needed for Streamlit deployment
+# in order to have the correct sqlite3 version
+# for Chroma
+# comment out for mac silicon local dev
+# @todo: use a chip-type switch
+__import__("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+#####################
+
 
 cwd = Path.cwd()
 
