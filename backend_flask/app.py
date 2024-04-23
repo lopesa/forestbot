@@ -1,13 +1,10 @@
 from flask import Flask, request
 
-# from dotenv import load_dotenv
 # import os
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-# env = os.environ
-
-
+# # env = os.environ
 chat = ChatOpenAI(model="gpt-3.5-turbo-1106", temperature=0.2)
 
 prompt = ChatPromptTemplate.from_messages(
@@ -24,6 +21,11 @@ chain = prompt | chat
 
 
 app = Flask(__name__)
+
+
+@app.route("/")
+def hello_world():
+    return "Hello, home!"
 
 
 @app.route("/api/chat", methods=["POST"])
