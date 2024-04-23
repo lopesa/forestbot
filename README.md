@@ -29,8 +29,6 @@ poetry run streamlit run streamlit_app/streamlit_chatbot.py
 
 #### Setup notes (review validity of these notes)
 
-• python version has to be 3.11.0. 3.12.0 (only specfically tried 3.12, not sure about > 3.12.0) gives a setup error
-
 • node version has to be 18.x, not 20.x. 20.x is incompatible with the needed Python version within Vercel.
 See here: https://stackoverflow.com/questions/78233938/vercel-error-unable-to-find-any-supported-python-versions
 
@@ -56,6 +54,8 @@ In production, the Flask server is hosted on Digital Ocean App Platform.
 
 ## Getting Started
 
+### UI
+
 First, install the dependencies:
 
 ```bash
@@ -69,25 +69,18 @@ pnpm install
 
 Then, run the development server:
 
-I recommend running the Flask server in a separate terminal window, especially if you want to debug the api.
-
-```bash
-# in one window:
-npm run next-dev
-# in another window:
-npm run flask-dev
-```
-
-If you want to run both servers in one terminal window, you can run the following command:
-
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+```
+
+### Flask API
+
+from root directory
+
+```bash
+poetry run python -m flask --app backend_flask.app run -p 5328
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328) – feel free to change the port in `package.json` (you'll also need to update it in `next.config.js`).
+The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328) – port defined in `package.json` (you'll also need to update it in `next.config.js`).

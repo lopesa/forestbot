@@ -48,5 +48,5 @@ poetry.lock
 .vscode/
 
 # UI
-/ui/node_modules
-/ui/.next
+/ui_next/node_modules
+/ui_next/.next
