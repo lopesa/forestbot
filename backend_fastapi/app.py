@@ -1,10 +1,12 @@
-from flask import Flask, request
-
-# import os
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException, Request
+from pydantic import BaseModel
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-# # env = os.environ
+# TO DO: Replace with setting DI per fastapi best practice https://fastapi.tiangolo.com/advanced/settings/
+load_dotenv()
+
 chat = ChatOpenAI(model="gpt-3.5-turbo-1106", temperature=0.2)
 
 prompt = ChatPromptTemplate.from_messages(
@@ -19,24 +21,23 @@ prompt = ChatPromptTemplate.from_messages(
 
 chain = prompt | chat
 
+app = FastAPI()
 
-app = Flask(__name__)
+
+class RequestBody(BaseModel):
+    messages: list
 
 
-@app.route("/")
+@app.get("/")
 def hello_world():
     return "Hello, home!"
 
 
-@app.route("/api/chat", methods=["POST"])
-def main():
-    test = chain.invoke(
-        {
-            "messages": request.json["messages"],
-        }
-    )
+@app.post("/api/chat")
+async def main(request: Request, body: RequestBody):
+    test = chain.invoke({"messages": body.messages})
     try:
         res = test.content
     except Exception:
-        res = "Error"
+        raise HTTPException(status_code=500, detail="Internal Server Error")
     return res
