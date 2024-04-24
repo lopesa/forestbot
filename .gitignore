@@ -40,3 +40,13 @@ __pycache__
 
 # additions
 .python-version
+
+# poetry
+poetry.lock
+
+# VS Code
+.vscode/
+
+# UI
+/ui_next/node_modules
+/ui_next/.next
