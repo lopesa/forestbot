@@ -81,6 +81,12 @@ from backend_fastapi directory
 poetry run uvicorn app:app --port 5328
 ```
 
+for dev you can do:
+
+```bash
+poetry run uvicorn app:app --reload --port 5328
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 The Fastapi server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328) – port defined in `package.json` (you'll also need to update it in `next.config.js`).

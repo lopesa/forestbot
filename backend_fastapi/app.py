@@ -13,9 +13,10 @@ app = FastAPI()
 # TO DO: Replace with setting DI per fastapi best practice https://fastapi.tiangolo.com/advanced/settings/
 
 # the following doesn't work any more for some reason
+# load_dotenv()
+
 # the pydantic way noted above seems like the best way
 # a current hack until then is: https://pypi.org/project/poetry-dotenv-plugin/ 
-# load_dotenv()
 
 class RequestBody(BaseModel):
     messages: list
@@ -23,7 +24,7 @@ class RequestBody(BaseModel):
 
 @app.get("/")
 def hello_world():
-    return "Hello, homie!"
+    return "Hello, home!"
 
 
 @app.post("/api/chat")
