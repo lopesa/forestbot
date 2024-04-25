@@ -3,26 +3,19 @@ from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from services.gpt_passthrough import chain
 
-# TO DO: Replace with setting DI per fastapi best practice https://fastapi.tiangolo.com/advanced/settings/
-load_dotenv()
+import services.call_rag as call_rag
 
-chat = ChatOpenAI(model="gpt-3.5-turbo-1106", temperature=0.2)
-
-prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            "You are a helpful assistant. Answer all questions to the best of your ability.",
-        ),
-        MessagesPlaceholder(variable_name="messages"),
-    ]
-)
-
-chain = prompt | chat
 
 app = FastAPI()
 
+# TO DO: Replace with setting DI per fastapi best practice https://fastapi.tiangolo.com/advanced/settings/
+
+# the following doesn't work any more for some reason
+# the pydantic way noted above seems like the best way
+# a current hack until then is: https://pypi.org/project/poetry-dotenv-plugin/ 
+# load_dotenv()
 
 class RequestBody(BaseModel):
     messages: list
@@ -30,14 +23,16 @@ class RequestBody(BaseModel):
 
 @app.get("/")
 def hello_world():
-    return "Hello, home!"
+    return "Hello, homie!"
 
 
 @app.post("/api/chat")
 async def main(request: Request, body: RequestBody):
-    test = chain.invoke({"messages": body.messages})
+    # gpt_passthrough = chain.invoke({"messages": body.messages})
+    rag_response = call_rag.ask(body.messages[-1]["content"])
     try:
-        res = test.content
+        # res = gpt_passthrough.content
+        res = rag_response
     except Exception:
         raise HTTPException(status_code=500, detail="Internal Server Error")
     return res

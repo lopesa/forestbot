@@ -1,7 +1,6 @@
 import os
 import sys
 import openai
-from dotenv import load_dotenv, find_dotenv
 import logging
 
 # Importing necessary modules and classes from langchain
@@ -10,17 +9,19 @@ from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_community.vectorstores import Chroma
 
-import chromadb
+from pathlib import Path
 
+import chromadb
 
 # Setup logging
 logging.basicConfig(level=logging.ERROR)
 
 
-def load_environment_variables():
-    """Load and return environment variables."""
-    _ = load_dotenv(find_dotenv())
-    return os.environ["OPENAI_API_KEY"]
+
+# def load_environment_variables():
+#     """Load and return environment variables."""
+#     _ = load_dotenv(find_dotenv())
+#     return os.environ["OPENAI_API_KEY"]
 
 
 def initialize_embedding(api_key):
@@ -33,7 +34,7 @@ def check_vector_store(path):
     """Check if the vector store exists at the given path and return a Chroma instance or raise an exception."""
     if not os.path.exists(path):
         raise FileNotFoundError(
-            "Vector store not found. Please ensure the directory exists or provide a valid path."
+            "Vector store not found. Please ensure the directory exists or provide a valid path. Path:", path
         )
     return Chroma(
         persist_directory=path, embedding_function=initialize_embedding(openai.api_key)
@@ -76,10 +77,12 @@ def run_qa_chain(llm, vectordb, question):
 
 
 def ask(question):
-    api_key = load_environment_variables()
-    embedding = initialize_embedding(api_key)
+    # api_key = load_environment_variables()
+    # embedding = initialize_embedding(api_key)
 
     cwd = os.getcwd()
+    parent_dir = Path(cwd).parent
+    
 
     # configuration = {
     #   "client": "PersistentClient",
