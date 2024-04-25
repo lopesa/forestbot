@@ -2,7 +2,15 @@
 
 import Chat from './components/Chat';
 import { useChat } from 'ai/react';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
+
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+
+enum LLM_VERSION {
+  GPT_PASSTHROUGH = 'gpt-passthrough',
+  RAG_V1 = 'rag-v1'
+}
 
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -17,6 +25,11 @@ export default function Home() {
     // setContext(null);
     // setGotMessages(false);
   };
+
+  const [llmVersion, setLlmVersion] = useState<LLM_VERSION>(
+    LLM_VERSION.GPT_PASSTHROUGH
+  );
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-24">
       <h1 className="text-4xl font-bold mb-10">Forestbot</h1>
@@ -26,6 +39,34 @@ export default function Home() {
         handleMessageSubmit={handleMessageSubmit}
         messages={messages}
       />
+
+      <RadioGroup defaultValue={llmVersion}>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem
+            value={LLM_VERSION.GPT_PASSTHROUGH}
+            id={LLM_VERSION.GPT_PASSTHROUGH}
+            onClick={() => {
+              // debugger;
+              setLlmVersion(LLM_VERSION.GPT_PASSTHROUGH);
+            }}
+          />
+          <Label htmlFor="option-one">gpt passthrough</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem
+            value={LLM_VERSION.RAG_V1}
+            id={LLM_VERSION.RAG_V1}
+            onClick={() => {
+              // debugger;
+              setLlmVersion(LLM_VERSION.RAG_V1);
+            }}
+          />
+          <Label htmlFor="option-two">rag v1</Label>
+        </div>
+      </RadioGroup>
+
+      <h1>LLM version: {llmVersion}</h1>
+
       <h2 className="test-xl mb-4">
         Ask questions of the documents and backed by the documents
       </h2>
