@@ -1,8 +1,5 @@
-from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from services.gpt_passthrough import chain
 
 import services.call_rag as call_rag
@@ -29,11 +26,12 @@ def hello_world():
 
 @app.post("/api/chat")
 async def main(request: Request, body: RequestBody):
-    # gpt_passthrough = chain.invoke({"messages": body.messages})
-    rag_response = call_rag.ask(body.messages[-1]["content"])
+    parsed_request = await request.json()
+    llm_version = parsed_request['llmVersion']
+
     try:
-        # res = gpt_passthrough.content
-        res = rag_response
+        res = call_rag.ask(body.messages[-1]["content"]) if llm_version == "rag-v1" else chain.invoke({"messages": body.messages}) 
     except Exception:
         raise HTTPException(status_code=500, detail="Internal Server Error")
-    return res
+    
+    return res.content if llm_version == "gpt-passthrough" else res

@@ -28,7 +28,7 @@ export default function RootLayout({
           gtag('js', new Date()); gtag('config', 'G-8YPBL37DKV');`}
         </Script>
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} dark`}>{children}</body>
     </html>
   );
 }
