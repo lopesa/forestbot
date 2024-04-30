@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "forestbot api"
+version = "0.1.0"
+description = ""
+authors = ["Guillaume Soto", "Tony Lopes", "Connor Haines"]
+packages = [{ include = "*.py" }]
+
+[tool.poetry.dependencies]
+python = ">3.11,<4.0"
+openai = "^1.17.1"
+langchain = { extras = ["docarray"], version = "^0.1.16" }
+gunicorn = "^22.0.0"
+langchain-openai = "^0.1.3"
+python-dotenv = "^1.0.1"
+fastapi = "^0.110.2"
+uvicorn = "^0.29.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

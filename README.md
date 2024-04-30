@@ -73,14 +73,14 @@ Then, run the development server:
 npm run dev
 ```
 
-### Flask API
+### Fastapi
 
-from root directory
+from backend_fastapi directory
 
 ```bash
-poetry run python -m flask --app backend_flask.app run -p 5328
+poetry run uvicorn app:app --port 5328
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328) – port defined in `package.json` (you'll also need to update it in `next.config.js`).
+The Fastapi server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328) – port defined in `package.json` (you'll also need to update it in `next.config.js`).
