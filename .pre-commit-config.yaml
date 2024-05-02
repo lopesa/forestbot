@@ -52,25 +52,6 @@ repos:
           ]
         language_version: python3.10
 
-      # streamlit app
-      - id: poetry-check
-        args: ['-C', './streamlit_app']
-        language_version: python3.10
-      - id: poetry-lock
-        args: ['-C', './streamlit_app']
-        language_version: python3.10
-      - id: poetry-export
-        args:
-          [
-            '-C',
-            './streamlit_app',
-            '-f',
-            'requirements.txt',
-            '-o',
-            './streamlit_app/requirements.txt'
-          ]
-        language_version: python3.10
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
     rev: v0.3.7
