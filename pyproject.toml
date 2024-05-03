@@ -4,7 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["Guillaume Soto", "Tony Lopes", "Connor Haines"]
 readme = "README.md"
-package-mode = false
+
+
+# I commented this line because it gave me the error Additional properties are not allowed ('package-mode' was unexpected)
+#package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10,<3.11"
