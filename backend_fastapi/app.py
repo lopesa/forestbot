@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from services.gpt_passthrough import chain, send_message
 import asyncio
@@ -8,6 +9,14 @@ import services.call_rag as call_rag
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # TO DO: Replace with setting DI per fastapi best practice https://fastapi.tiangolo.com/advanced/settings/
 
@@ -20,10 +29,10 @@ app = FastAPI()
 class RequestBody(BaseModel):
     messages: list
 
-async def fake_video_streamer():
-    for i in range(10):
-        yield b"some fake video bytes"
-        await asyncio.sleep(0.5)
+# async def fake_video_streamer():
+#     for i in range(10):
+#         yield b"some fake video bytes"
+#         await asyncio.sleep(0.5)
 
 
 # @app.get("/")
@@ -34,15 +43,16 @@ async def fake_video_streamer():
 
 
 @app.post("/api/chat")
-# async def main(request: Request, body: RequestBody):
-async def main(request: Request):
-    return StreamingResponse(fake_video_streamer(), media_type='text/event-stream')
+async def main(request: Request, body: RequestBody):
+# async def main(request: Request):
+    # return StreamingResponse(fake_video_streamer(), media_type='text/event-stream')
     
     # parsed_request = await request.json()
     # llm_version = parsed_request['llmVersion']
 
-    # # generator = send_message(body.messages[0]['content'])
-    # # return StreamingResponse(generator, media_type="text/event-stream")
+    generator = send_message(body.messages[-1]['content'])
+    # generator = send_message(body.messages)
+    return StreamingResponse(generator, media_type="text/event-stream")
 
     # if llm_version == "rag-v1":
     #     try:
