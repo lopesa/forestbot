@@ -44,45 +44,19 @@ class RequestBody(BaseModel):
 
 @app.post("/api/chat")
 async def main(request: Request, body: RequestBody):
-# async def main(request: Request):
-    # return StreamingResponse(fake_video_streamer(), media_type='text/event-stream')
-    
-    # parsed_request = await request.json()
-    # llm_version = parsed_request['llmVersion']
+    parsed_request = await request.json()
+    llm_version = parsed_request['llmVersion']
 
-    # generator = send_message(body.messages[-1]['content'])
-    generator = send_message(body.messages)
-    return StreamingResponse(generator, media_type="text/event-stream")
-    # res = send_message(body.messages)
-    # return res
-    # return send_message(body.messages[-1]['content'])
-
-    # if llm_version == "rag-v1":
-    #     try:
-    #         res = call_rag.ask(body.messages[-1]["content"])
-    #     except Exception:
-    #         raise HTTPException(status_code=500, detail="Internal Server Error")
-    #     return res.content
-    # else:
-    #     return StreamingResponse(send_message(body.messages[0]['content']), media_type="text/event-stream")
-        # try:
-        #     print("body.messages", body.messages[0]['content'])
-        #     # generator = send_message(body.messages)
-        #     # generator = send_message(body.messages[0]['content'])
-        #     # res = chain.invoke({"messages": body.messages})
-        #     # return StreamingResponse(generator, media_type="text/event-stream")
-        #     return StreamingResponse(send_message(body.messages[0]['content']), media_type="text/event-stream")
-        # except Exception:
-        #     raise HTTPException(status_code=500, detail="Internal Server Error")
-
-
-# async def main(request: Request, body: RequestBody):
-#     parsed_request = await request.json()
-#     llm_version = parsed_request['llmVersion']
-
-#     try:
-#         res = call_rag.ask(body.messages[-1]["content"]) if llm_version == "rag-v1" else chain.invoke({"messages": body.messages}) 
-#     except Exception:
-#         raise HTTPException(status_code=500, detail="Internal Server Error")
-    
-#     return res.content if llm_version == "gpt-passthrough" else res
+    if llm_version == "rag-v1":
+        try:
+            res = call_rag.ask(body.messages[-1]["content"])
+        except Exception as e:
+            print('error:', e)
+            raise HTTPException(status_code=500, detail="Internal Server Error")
+        return res.content
+    else:
+        try:
+            generator = send_message(body.messages)         
+        except Exception:
+            raise HTTPException(status_code=500, detail="Internal Server Error")
+        return StreamingResponse(generator, media_type="text/event-stream")
