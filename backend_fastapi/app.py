@@ -50,9 +50,12 @@ async def main(request: Request, body: RequestBody):
     # parsed_request = await request.json()
     # llm_version = parsed_request['llmVersion']
 
-    generator = send_message(body.messages[-1]['content'])
-    # generator = send_message(body.messages)
+    # generator = send_message(body.messages[-1]['content'])
+    generator = send_message(body.messages)
     return StreamingResponse(generator, media_type="text/event-stream")
+    # res = send_message(body.messages)
+    # return res
+    # return send_message(body.messages[-1]['content'])
 
     # if llm_version == "rag-v1":
     #     try:
