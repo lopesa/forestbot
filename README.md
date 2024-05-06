@@ -1,7 +1,7 @@
 # Forest Info Bot
 
-The repo contains two versions of the app, one is Nextjs ui and FLask api.
-The other is a Streamlit app.
+The repo contains the Nextjs ui and backend Fastapi app.
+
 Additionally there are some storage and workspace folders
 
 ## with both versions of the app, use poetry to manage the python dependencies
@@ -17,15 +17,7 @@ and add a `.env` file in the root directory with the following content:
 OPENAI_API_KEY=<your_openai_api_key>
 ```
 
----
-
-## Streamlit App
-
-```bash
-poetry run streamlit run streamlit_app/streamlit_chatbot.py
-```
-
-## Next/Flask App
+## Next/FastApi App
 
 #### Setup notes (review validity of these notes)
 
