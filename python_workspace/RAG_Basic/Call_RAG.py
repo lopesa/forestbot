@@ -9,6 +9,7 @@ from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_community.vectorstores import Chroma
+from langchain_groq.chat_models import ChatGroq
 
 
 # Setup logging
@@ -54,8 +55,24 @@ def run_qa_chain(llm, vectordb, question):
         return_source_documents=True,
         chain_type_kwargs={"prompt": QA_CHAIN_PROMPT},
     )
-    result = qa_chain.invoke({"query": question})
-    return result["result"]
+    return qa_chain.invoke({"query": question})
+
+def ask_metadata(question):
+    api_key = load_environment_variables()
+    embedding = initialize_embedding(api_key)
+    base_path = os.path.dirname(
+        os.path.abspath(__file__)
+    )  # Obtient le chemin absolu du script actuel
+    try:
+        vectordb = check_vector_store(os.path.join(base_path, "../../vectorstore/chroma/"))
+    except FileNotFoundError as e:
+        logging.error(e)
+        sys.exit(1)
+
+    #llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    llm = ChatGroq(temperature=0, model_name="llama3-70b-8192")
+    answer=run_qa_chain(llm, vectordb, question)
+    return answer
 
 
 def ask(question):
@@ -65,17 +82,45 @@ def ask(question):
         os.path.abspath(__file__)
     )  # Obtient le chemin absolu du script actuel
     try:
-        vectordb = check_vector_store(os.path.join(base_path, "../vectorstore/chroma/"))
+        vectordb = check_vector_store(os.path.join(base_path, "../../vectorstore/chroma/"))
     except FileNotFoundError as e:
         logging.error(e)
         sys.exit(1)
 
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    #llm = ChatGroq(temperature=0, model_name="llama3-70b-8192")
+    answer=run_qa_chain(llm, vectordb, question)
+    return answer["result"]
 
-    return run_qa_chain(llm, vectordb, question)
+def ask_Llama3(question):
+    api_key = load_environment_variables()
+    embedding = initialize_embedding(api_key)
+    base_path = os.path.dirname(
+        os.path.abspath(__file__)
+    )  # Obtient le chemin absolu du script actuel
+    try:
+        vectordb = check_vector_store(os.path.join(base_path, "../../vectorstore/chroma/"))
+    except FileNotFoundError as e:
+        logging.error(e)
+        sys.exit(1)
+
+    #llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    llm = ChatGroq(temperature=0, model_name="llama3-70b-8192")
+    answer=run_qa_chain(llm, vectordb, question)
+    return answer["result"]
 
 
 if __name__ == "__main__":
     # main()
-    question = "What is the difference between OFAC and COMIFAC?"
-    print(ask(question))
+    question = "What is the difference between OFAC and COMIFAC ?"
+    print(f'Question : {question}')
+    print(f"Answer OpenAI {ask(question)}")
+    print(f"Answer Llama3 {ask_Llama3(question)}")
+    # answer = ask_metadata(question)
+    # result= answer["result"]
+    # print(f"Answer {result}")
+    # for doc in answer['source_documents']:
+    #     print("Document Content:", doc.page_content)
+    #     print("Document Page:", doc.metadata['page'])
+    #     print("Document Source:", doc.metadata['source'])
+    #     print("\n")

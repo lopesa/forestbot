@@ -1,3 +1,15 @@
+'''This Python script is designed for managing the vector store used in document processing with langchain libraries. It performs the following key tasks:
+
+1. Environment Setup: Loads necessary environment variables from a .env file, ensuring that the API key for OpenAI is available and valid. This step is crucial for enabling the embedding functionalities that depend on OpenAI's services.
+
+2. Document Loading: Utilizes PyPDFLoader to load PDF documents from specified paths. These documents are then prepared for processing, which involves breaking them down into manageable text segments using a RecursiveCharacterTextSplitter.
+
+3. Vector Store Management:
+   - Checks if a pre-existing vector store is available at a specified directory. If it exists, the script loads this vector store to reuse previously computed embeddings.
+   - If no vector store is found, the script generates a new one using the loaded and processed documents. This involves creating embeddings for the text segments and storing them in a way that they can be efficiently retrieved for future use.
+
+'''
+
 #########################
 ###       Import      ###
 #########################
@@ -15,22 +27,16 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 ###     Setup API     ###
 #########################
 
-# Trouver le fichier .env dans le répertoire courant ou remonter jusqu'à ce qu'il soit trouvé
-env_path = find_dotenv()
-if not env_path:
-    raise Exception("Fichier .env non trouvé")
+# Load the .env file from the current directory or parent directory
+load_dotenv(find_dotenv(raise_error_if_not_found=True))
 
-# Charger les variables d'environnement à partir du fichier trouvé
-load_dotenv(env_path)
-
-# Vérifier que la clé API nécessaire est chargée
+# Retrieve and verify the OpenAI API key
 api_key = os.getenv("OPENAI_API_KEY")
-
 if not api_key:
-    raise EnvironmentError("OPENAI_API_KEY non définie dans le fichier .env")
+    raise EnvironmentError("OPENAI_API_KEY not defined in the .env file")
 
-# Continuer avec l'utilisation de api_key
-print("Clé API chargée avec succès.")
+# Use the API key
+print("OPENAI_API_KEY successfully loaded.")
 
 
 #########################
