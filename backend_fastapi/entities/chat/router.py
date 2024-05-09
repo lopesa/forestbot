@@ -2,6 +2,7 @@ from entities.chat.rag_service import RAGService
 from fastapi import APIRouter, Depends, HTTPException
 from entities.chat.gpt_passthrough_service import GPTPassthroughService
 from pydantic_base import CamelMode
+from fastapi.responses import StreamingResponse
 
 router = APIRouter()
 
@@ -34,9 +35,9 @@ async def main(
     try:
         if body.llm_version == "rag-v1":
             return rag_service.run_qa_chain(body.messages[-1].content)
-        res = gpt_passthrough_service.process_message(
-            {"messages": [msg.model_dump() for msg in body.messages]}
+        generator = gpt_passthrough_service.get_res_stream(
+            [msg.model_dump() for msg in body.messages]
         )
-        return res.content
+        return StreamingResponse(generator, media_type="text/event-stream")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

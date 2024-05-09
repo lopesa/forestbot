@@ -1,10 +1,13 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.schema import BaseMessage
+from langchain_core.output_parsers import StrOutputParser
 
 
 class GPTPassthroughService:
     def __init__(self, model_name="gpt-3.5-turbo-1106", temperature=0.2):
         self.chat = ChatOpenAI(model=model_name, temperature=temperature)
+        self.parser = StrOutputParser()
         self.prompt = ChatPromptTemplate.from_messages(
             [
                 (
@@ -14,7 +17,10 @@ class GPTPassthroughService:
                 MessagesPlaceholder(variable_name="messages"),
             ]
         )
+        self.chain = self.prompt | self.chat | self.parser
 
-    def process_message(self, messages):
-        chain = self.prompt | self.chat
-        return chain.invoke(messages)
+    async def get_res_stream(self, messages):
+        stream = self.chain.astream({"messages": messages})
+        async for chunk in stream:
+          yield chunk
+        await stream.aclose()
