@@ -32,12 +32,20 @@ async def main(
     rag_service: RAGService = Depends(RAGService),
     gpt_passthrough_service: GPTPassthroughService = Depends(GPTPassthroughService),
 ):
+    messages = [msg.model_dump() for msg in body.messages]
     try:
         if body.llm_version == "rag-v1":
-            return rag_service.run_qa_chain(body.messages[-1].content)
-        generator = gpt_passthrough_service.get_res_stream(
-            [msg.model_dump() for msg in body.messages]
-        )
-        return StreamingResponse(generator, media_type="text/event-stream")
+            # generator = rag_service.get_qa_chain_stream(body.messages[-1].content)
+            
+            # print('messages', messages)
+            generator = rag_service.get_qa_chain_stream(messages)
+            # return rag_service.get_qa_chain_stream(body.messages[-1].content)
+            # return rag_service.run_qa_chain(body.messages[-1].content)
+        else:
+            generator = gpt_passthrough_service.get_res_stream(messages)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+    print('generator~~~~~~~~~~~~~', generator)
+    return StreamingResponse(generator, media_type="text/event-stream")
+    # return 'cats'
