@@ -16,12 +16,14 @@
 
 import os
 from dotenv import load_dotenv, find_dotenv
+base_path = os.path.dirname(os.path.abspath(__file__))
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_openai import OpenAIEmbeddings
+#from langchain_community.vectorstores import Chroma
 from langchain.vectorstores import Chroma
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 #########################
 ###     Setup API     ###
@@ -43,8 +45,8 @@ print("OPENAI_API_KEY successfully loaded.")
 ### Load document     ###
 #########################
 loaders = [
-    PyPDFLoader("../pdf/EdAP 2020_EN.pdf"),
-    PyPDFLoader("../pdf/SOF book-web-rev3d-hires.pdf"),
+    PyPDFLoader(os.path.join(base_path, '..', '..', 'pdf', 'EdAP 2020_EN.pdf')),
+    PyPDFLoader(os.path.join(base_path, '..', '..', 'pdf', 'SOF book-web-rev3d-hires.pdf')),
 ]
 
 docs = []
