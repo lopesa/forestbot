@@ -1,0 +1,26 @@
+{
+    "keepSettings": {
+        "type": 1,
+        "amount": 30
+    },
+    "auditFilename": "audit.json",
+    "hashType": "md5",
+    "extension": ".log",
+    "files": [
+        {
+            "date": 1716316601524,
+            "name": "/home/guillaume/.tabby-client/agent/logs/20240521.0.log",
+            "hash": "07eddbbfa9cc0da14a099087e9dbf4a2"
+        },
+        {
+            "date": 1716554545465,
+            "name": "/home/guillaume/.tabby-client/agent/logs/20240524.0.log",
+            "hash": "c8e82809a7a8782d6cf2a3d9a6bcc008"
+        },
+        {
+            "date": 1716899779303,
+            "name": "/home/guillaume/.tabby-client/agent/logs/20240528.0.log",
+            "hash": "9066cadef1d8f044131ff966f3a20626"
+        }
+    ]
+}
