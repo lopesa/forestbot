@@ -5,9 +5,21 @@ from entities.api_router import router as api_router
 
 app = FastAPI(title="forestinfo-bot")
 
+# for local development
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+# for production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    # for local dev
+    # allow_origins=["*"],
+    #for production
+    allow_origins=["https://forestbot.vercel.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

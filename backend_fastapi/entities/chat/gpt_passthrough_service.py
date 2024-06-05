@@ -1,6 +1,5 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.schema import BaseMessage
 from langchain_core.output_parsers import StrOutputParser
 
 
@@ -21,8 +20,8 @@ class GPTPassthroughService:
 
     async def get_res_stream(self, messages):
         stream = self.chain.astream({"messages": messages})
-        print('stream', stream)
+        # print('stream', stream)
         async for chunk in stream:
           print('chunk', chunk)
-          yield chunk
+          # yield chunk
         await stream.aclose()
