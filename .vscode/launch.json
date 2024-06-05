@@ -2,55 +2,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python: Poetry",
-      "type": "debugpy",
-      // "request": "attach",
-      "python": "/Users/tonylopes/projects/RAG_for_PAPFOR/forestbot/backend_fastapi/.venv/bin/python",
-      "module": "app",
-      // "module": "poetry",
+      "name": "Python Uvicorn",
+      "module": "uvicorn",
+      "python": "${workspaceFolder}/backend_fastapi/.venv/bin/python",
       "args": [
-        "poetry",
-        "run",
-        "uvicorn",
         "app:app",
-        "--reload",
+        "--host",
+        "0.0.0.0",
         "--port",
-        "5328"
+        "5328",
+        "--reload"
       ],
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal"
-    },
-    // {
-    //   "name": "Python Debugger: Current File",
-    //   "type": "debugpy",
-    //   "request": "launch",
-    //   // "program": "${file}",
-    //   "command": "poetry run uvicorn app:app --reload --port 532",
-    //   "console": "integratedTerminal",
-    //   "python": "${command:python.interpreterPath}"
-    // },
-    {
-      "name": "Next.js: debug server-side",
-      "type": "node-terminal",
+      "cwd": "${workspaceFolder}/backend_fastapi",
+      "type": "debugpy",
       "request": "launch",
-      "command": "npm run dev"
     },
-    {
-      "name": "Next.js: debug client-side",
-      "type": "chrome",
-      "request": "launch",
-      "url": "http://localhost:3000"
-    },
-    {
-      "name": "Next.js: debug full stack",
-      "type": "node-terminal",
-      "request": "launch",
-      "command": "npm run dev",
-      "serverReadyAction": {
-        "pattern": "- Local:.+(https?://.+)",
-        "uriFormat": "%s",
-        "action": "debugWithChrome"
-      }
-    }
   ]
 }
