@@ -11,9 +11,9 @@ app.include_router(api_router, prefix="/api")
 app.add_middleware(
     CORSMiddleware,
     # for local dev
-    # allow_origins=["*"],
+    allow_origins=["*"],
     #for production
-    allow_origins=["https://forestbot.vercel.app/"],
+    # allow_origins=["https://forestbot.vercel.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
