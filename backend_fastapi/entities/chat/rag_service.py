@@ -123,4 +123,4 @@ class RAGService:
           yield chunk
 
         # TODO: return 'docs' (above) also to the client as metadata
-        # await stream.aclose()
+        await stream.aclose()
