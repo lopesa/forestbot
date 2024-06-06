@@ -1,6 +1,5 @@
 from entities.chat.rag_service import RAGService
 from fastapi import APIRouter, Depends, HTTPException
-from entities.chat.gpt_passthrough_service import GPTPassthroughService
 from pydantic_base import CamelMode
 from fastapi.responses import StreamingResponse
 
@@ -17,7 +16,7 @@ class Message(CamelMode):
 
 
 class RequestBody(CamelMode):
-    llm_version: str
+    # llm_version: str
     messages: list[Message]
 
 
@@ -30,18 +29,10 @@ def hello_world():
 async def main(
     body: RequestBody,
     rag_service: RAGService = Depends(RAGService),
-    gpt_passthrough_service: GPTPassthroughService = Depends(GPTPassthroughService),
 ):
     messages = [msg.model_dump() for msg in body.messages]
     try:
-        if body.llm_version == "rag-v1":
-            
-            generator = rag_service.get_qa_chain_stream(messages) 
-
-            # see rag_service for details
-            # return rag_service.run_qa_chain(body.messages[-1].content)
-        else:
-            generator = gpt_passthrough_service.get_res_stream(messages)
+        generator = rag_service.get_qa_chain_stream(messages) 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
