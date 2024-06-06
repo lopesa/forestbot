@@ -7,10 +7,10 @@ import { FormEvent, useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
-enum LLM_VERSION {
-  GPT_PASSTHROUGH = 'gpt-passthrough',
-  RAG_V1 = 'rag-v1'
-}
+// enum LLM_VERSION {
+//   GPT_PASSTHROUGH = 'gpt-passthrough',
+//   RAG_V1 = 'rag-v1'
+// }
 
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -18,22 +18,18 @@ export default function Home() {
       process.env.NODE_ENV === 'development'
         ? 'http://127.0.0.1:5328/api/chat'
         : 'https://jellyfish-app-ll6mk.ondigitalocean.app/api/chat',
-    onFinish: async () => {
-      // setGotMessages(true);
-    },
+    onFinish: async () => {},
     streamMode: 'text'
   });
 
   const handleMessageSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSubmit(e, { options: { body: { llmVersion } } });
-    // setContext(null);
-    // setGotMessages(false);
+    handleSubmit(e);
   };
 
-  const [llmVersion, setLlmVersion] = useState<LLM_VERSION>(
-    LLM_VERSION.GPT_PASSTHROUGH
-  );
+  // const [llmVersion, setLlmVersion] = useState<LLM_VERSION>(
+  //   LLM_VERSION.GPT_PASSTHROUGH
+  // );
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-24">
@@ -45,9 +41,9 @@ export default function Home() {
         messages={messages}
       />
 
-      <h3 className="text-xl">LLM version: {llmVersion}</h3>
+      {/* <h3 className="text-xl">LLM version: {llmVersion}</h3> */}
 
-      <RadioGroup defaultValue={llmVersion} className="flex text-sm mt-4">
+      {/* <RadioGroup defaultValue={llmVersion} className="flex text-sm mt-4">
         <div>Set LLM Version</div>
         <div className="flex items-center space-x-2">
           <RadioGroupItem
@@ -69,7 +65,7 @@ export default function Home() {
           />
           <Label htmlFor="option-two">rag v1</Label>
         </div>
-      </RadioGroup>
+      </RadioGroup> */}
     </main>
   );
 }
