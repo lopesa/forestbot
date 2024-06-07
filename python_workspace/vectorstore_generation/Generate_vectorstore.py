@@ -1,4 +1,4 @@
-'''This Python script is designed for managing the vector store used in document processing with langchain libraries. It performs the following key tasks:
+"""This Python script is designed for managing the vector store used in document processing with langchain libraries. It performs the following key tasks:
 
 1. Environment Setup: Loads necessary environment variables from a .env file, ensuring that the API key for OpenAI is available and valid. This step is crucial for enabling the embedding functionalities that depend on OpenAI's services.
 
@@ -8,7 +8,7 @@
    - Checks if a pre-existing vector store is available at a specified directory. If it exists, the script loads this vector store to reuse previously computed embeddings.
    - If no vector store is found, the script generates a new one using the loaded and processed documents. This involves creating embeddings for the text segments and storing them in a way that they can be efficiently retrieved for future use.
 
-'''
+"""
 
 #########################
 ###       Import      ###
@@ -16,11 +16,13 @@
 
 import os
 from dotenv import load_dotenv, find_dotenv
+
 base_path = os.path.dirname(os.path.abspath(__file__))
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_openai import OpenAIEmbeddings
-#from langchain_community.vectorstores import Chroma
+
+# from langchain_community.vectorstores import Chroma
 from langchain.vectorstores import Chroma
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -45,8 +47,10 @@ print("OPENAI_API_KEY successfully loaded.")
 ### Load document     ###
 #########################
 loaders = [
-    PyPDFLoader(os.path.join(base_path, '..', '..', 'pdf', 'EdAP 2020_EN.pdf')),
-    PyPDFLoader(os.path.join(base_path, '..', '..', 'pdf', 'SOF book-web-rev3d-hires.pdf')),
+    PyPDFLoader(os.path.join(base_path, "..", "..", "pdf", "EdAP 2020_EN.pdf")),
+    PyPDFLoader(
+        os.path.join(base_path, "..", "..", "pdf", "SOF book-web-rev3d-hires.pdf")
+    ),
 ]
 
 docs = []

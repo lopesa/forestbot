@@ -22,6 +22,6 @@ class GPTPassthroughService:
         stream = self.chain.astream({"messages": messages})
         # print('stream', stream)
         async for chunk in stream:
-          print('chunk', chunk)
-          # yield chunk
+            print("chunk", chunk)
+            # yield chunk
         await stream.aclose()

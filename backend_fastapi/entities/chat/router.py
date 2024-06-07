@@ -37,18 +37,23 @@ async def main(
     try:
         docs = rag_service.get_augmentation_docs(messages)
         generator = rag_service.get_qa_chain_with_augmentation(messages, docs)
-        
-        # return metadata as headers, put it together on client
-        docs_dict = [{"page_content": doc.page_content, "metadata": doc.metadata} for doc in docs]
 
-        return StreamingResponse(generator, media_type="text/event-stream", headers={"docs": json.dumps(docs_dict)})
-        
+        # return metadata as headers, put it together on client
+        docs_dict = [
+            {"page_content": doc.page_content, "metadata": doc.metadata} for doc in docs
+        ]
+
+        return StreamingResponse(
+            generator,
+            media_type="text/event-stream",
+            headers={"docs": json.dumps(docs_dict)},
+        )
+
         # initial version
         # return rag_service.run_qa_chain(body.messages[-1].content)
 
         # initial version of streaming
         # generator = rag_service.get_qa_chain_stream(messages)
-    
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
