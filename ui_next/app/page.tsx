@@ -18,10 +18,15 @@ export default function Home() {
       process.env.NODE_ENV === 'development'
         ? 'http://127.0.0.1:5328/api/chat'
         : 'https://jellyfish-app-ll6mk.ondigitalocean.app/api/chat',
-    onFinish: async () => {},
-    onError: async e => {
-      console.error(e);
-    },
+    // onFinish: async finish => {
+    //   debugger;
+    // },
+    // onResponse: async res => {
+    //   debugger;
+    // },
+    // onError: async e => {
+    //   console.error(e);
+    // },
     streamMode: 'text'
   });
 
