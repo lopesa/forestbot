@@ -32,6 +32,7 @@ async def main(
 ):
     messages = [msg.model_dump() for msg in body.messages]
     try:
+        return rag_service.run_qa_chain(body.messages[-1].content)
         generator = rag_service.get_qa_chain_stream(messages) 
         return StreamingResponse(generator, media_type="text/event-stream")
     except Exception as e:

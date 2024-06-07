@@ -14,6 +14,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
+    // api: 'https://jellyfish-app-ll6mk.ondigitalocean.app/api/chat',
     api:
       process.env.NODE_ENV === 'development'
         ? 'http://127.0.0.1:5328/api/chat'
