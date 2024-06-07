@@ -15,11 +15,18 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     // api: 'https://jellyfish-app-ll6mk.ondigitalocean.app/api/chat',
+    // headers: {
+    //   Origin: 'http://localhost:3000',
+    //   'Access-Control-Request-Methods': 'POST'
+    // },
     api:
       process.env.NODE_ENV === 'development'
         ? 'http://127.0.0.1:5328/api/chat'
         : 'https://jellyfish-app-ll6mk.ondigitalocean.app/api/chat',
     onFinish: async () => {},
+    onError: async e => {
+      debugger;
+    },
     streamMode: 'text'
   });
 
