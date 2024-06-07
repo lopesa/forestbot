@@ -1,12 +1,12 @@
 from fastapi import FastAPI
-# from fastapi.middleware.cors import CORSMiddleware
-from starlette.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 
 from entities.api_router import router as api_router
 
 app = FastAPI(title="forestinfo-bot")
 
-
+# uncomment for dev
+# production cors is in the
 # app.add_middleware(
 #     CORSMiddleware,
 #     allow_origins=["*"],
@@ -16,7 +16,3 @@ app = FastAPI(title="forestinfo-bot")
 # )
 
 app.include_router(api_router, prefix="/api")
-# for production
-# for local dev
-#for production
-# allow_origins=["https://forestbot.vercel.app/"],
