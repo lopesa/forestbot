@@ -1,6 +1,6 @@
 // Chat.tsx
 
-import React, { FormEvent, ChangeEvent } from 'react';
+import React, { FormEvent, ChangeEvent, useEffect } from 'react';
 import Messages from './Messages';
 import { Message } from 'ai/react';
 
@@ -9,17 +9,22 @@ interface Chat {
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleMessageSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
   messages: Message[];
+  augmentationDataArray: any[];
 }
 
 const Chat: React.FC<Chat> = ({
   input,
   handleInputChange,
   handleMessageSubmit,
-  messages
+  messages,
+  augmentationDataArray
 }) => {
   return (
     <div id="chat" className="flex flex-col w-full lg:w-3/5 mr-4 mx-5 lg:mx-0">
-      <Messages messages={messages} />
+      <Messages
+        messages={messages}
+        augmentationDataArray={augmentationDataArray}
+      />
       <>
         <form
           onSubmit={handleMessageSubmit}

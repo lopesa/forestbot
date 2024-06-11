@@ -4,8 +4,8 @@ import Chat from './components/Chat';
 import { useChat } from 'ai/react';
 import { FormEvent, useState } from 'react';
 
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+// import { Label } from '@/components/ui/label';
+// import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 // enum LLM_VERSION {
 //   GPT_PASSTHROUGH = 'gpt-passthrough',
@@ -13,20 +13,36 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 // }
 
 export default function Home() {
+  const getAugmentationDataFromHeaders = (res: Response) => {
+    const augmentationDataJson = res.headers.get('X-Docs');
+    const augmentationData = augmentationDataJson
+      ? JSON.parse(augmentationDataJson)
+      : undefined;
+    if (augmentationData) {
+      augmentationData.forEach((augmentationDataItem: any) => {
+        // get the source pdf from the full file system url provided
+        var source = augmentationDataItem.metadata.source;
+        source = source.slice(source.lastIndexOf('/') + 1);
+        augmentationDataItem.metadata.source = source;
+      });
+    }
+    return augmentationData;
+  };
+
+  const [augmentationDataArray, setAugmentationDataArray] = useState<any[]>([]);
+
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api:
       process.env.NODE_ENV === 'development'
         ? 'http://127.0.0.1:5328/api/chat'
         : 'https://jellyfish-app-ll6mk.ondigitalocean.app/api/chat',
-    // onFinish: async finish => {
-    //   debugger;
-    // },
-    // onResponse: async res => {
-    //   debugger;
-    // },
-    // onError: async e => {
-    //   console.error(e);
-    // },
+    onResponse: res => {
+      const augmentationData = getAugmentationDataFromHeaders(res);
+      if (augmentationData) {
+        augmentationDataArray.push(augmentationData);
+        setAugmentationDataArray(augmentationDataArray);
+      }
+    },
     streamMode: 'text'
   });
 
@@ -47,6 +63,7 @@ export default function Home() {
         handleInputChange={handleInputChange}
         handleMessageSubmit={handleMessageSubmit}
         messages={messages}
+        augmentationDataArray={augmentationDataArray}
       />
 
       {/* <h3 className="text-xl">LLM version: {llmVersion}</h3> */}

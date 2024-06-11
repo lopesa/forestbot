@@ -46,7 +46,7 @@ async def main(
         return StreamingResponse(
             generator,
             media_type="text/event-stream",
-            headers={"docs": json.dumps(docs_dict)},
+            headers={"X-docs": json.dumps(docs_dict)},
         )
 
         # initial version

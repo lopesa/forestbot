@@ -1,11 +1,31 @@
 import { Message } from 'ai';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export default function Messages({ messages }: { messages: Message[] }) {
+export default function Messages({
+  messages,
+  augmentationDataArray
+}: {
+  messages: Message[];
+  augmentationDataArray: any[];
+}) {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const [messagesWithAugmentationData, setMessagesWithAugmentationData] =
+    useState<Message[]>([]);
+  useEffect(() => {
+    if (messages.length && augmentationDataArray.length) {
+      var i = 0;
+      messages.forEach(message => {
+        if (message.role === 'assistant' && augmentationDataArray.length) {
+          message.data = augmentationDataArray[i];
+          i++;
+        }
+      });
+    }
+    setMessagesWithAugmentationData(messages);
+  }, [messages]);
   return (
     <div className="border-2 border-gray-600 p-6 rounded-lg overflow-y-scroll flex-grow flex flex-col justify-end bg-gray-700">
-      {messages.map((msg, index) => (
+      {messagesWithAugmentationData.map((msg, index) => (
         <div
           key={index}
           className={`${
@@ -18,6 +38,12 @@ export default function Messages({ messages }: { messages: Message[] }) {
           <div className="ml-2 flex items-center text-gray-200">
             {msg.content}
           </div>
+
+          {msg.data && (
+            <div className="ml-2 flex items-center text-gray-200 text-xs">
+              {JSON.stringify(msg.data)}
+            </div>
+          )}
         </div>
       ))}
       <div ref={messagesEndRef} />
