@@ -9,7 +9,8 @@ from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_community.vectorstores import Chroma
-#from langchain.vectorstores import Chroma
+
+# from langchain.vectorstores import Chroma
 from langchain_groq.chat_models import ChatGroq
 from tenacity import retry, wait_exponential, stop_after_attempt
 
@@ -59,6 +60,7 @@ def run_qa_chain(llm, vectordb, question):
     )
     return qa_chain.invoke({"query": question})
 
+
 def ask_metadata(question):
     api_key = load_environment_variables()
     embedding = initialize_embedding(api_key)
@@ -71,9 +73,9 @@ def ask_metadata(question):
         logging.error(e)
         sys.exit(1)
 
-    #llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    # llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
     llm = ChatGroq(temperature=0, model_name="llama3-70b-8192")
-    answer=run_qa_chain(llm, vectordb, question)
+    answer = run_qa_chain(llm, vectordb, question)
     return answer
 
 
@@ -90,9 +92,10 @@ def ask(question):
         sys.exit(1)
 
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
-    #llm = ChatGroq(temperature=0, model_name="llama3-70b-8192")
-    answer=run_qa_chain(llm, vectordb, question)
+    # llm = ChatGroq(temperature=0, model_name="llama3-70b-8192")
+    answer = run_qa_chain(llm, vectordb, question)
     return answer["result"]
+
 
 @retry(wait=wait_exponential(multiplier=1, min=4, max=10), stop=stop_after_attempt(6))
 def ask_Llama3(question):
@@ -107,17 +110,17 @@ def ask_Llama3(question):
         logging.error(e)
         raise SystemExit(1)
 
-    #llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    # llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
     llm = ChatGroq(temperature=0, model_name="llama3-70b-8192")
-    answer=run_qa_chain(llm, vectordb, question)
+    answer = run_qa_chain(llm, vectordb, question)
     return answer["result"]
 
 
 if __name__ == "__main__":
     # main()
     question = "What is the difference between OFAC and COMIFAC ?"
-    print(f'Question : {question}')
-    #print(f"Answer OpenAI {ask(question)}")
+    print(f"Question : {question}")
+    # print(f"Answer OpenAI {ask(question)}")
     print(f"Answer Llama3 {ask_Llama3(question)}")
     # answer = ask_metadata(question)
     # result= answer["result"]
