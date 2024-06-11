@@ -1,14 +1,13 @@
 // Chat.tsx
 
-import React, { FormEvent, ChangeEvent, useEffect } from 'react';
-import Messages from './Messages';
-import { Message } from 'ai/react';
+import React, { FormEvent, ChangeEvent } from 'react';
+import Messages, { messageWithAugmentationData } from './Messages';
 
 interface Chat {
   input: string;
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleMessageSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
-  messages: Message[];
+  messages: messageWithAugmentationData[];
   augmentationDataArray: any[];
 }
 
